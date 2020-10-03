@@ -101,3 +101,57 @@
     (* (- (/ day-of-year 14) (floor (/ day-of-year 14))) 14))
 
   (string-append year month (string-pad-left (number->string day) 2 #\0)))
+
+(define (valid-gregorian gregorian-date)
+  (define is-valid
+    (and (> (string-length gregorian-date) 5)
+         (<= (string-length gregorian-date) 10)
+         (char-numeric? (nth 0 (string->list gregorian-date)))
+         (char-numeric? (nth 1 (string->list gregorian-date)))
+         (char-numeric? (nth 2 (string->list gregorian-date)))
+         (char-numeric? (nth 3 (string->list gregorian-date)))
+         (string=? (string (nth 4 (string->list gregorian-date))) "-")
+         (char-numeric? (nth 5 (string->list gregorian-date)))
+         (char-numeric? (nth 6 (string->list gregorian-date)))
+         (string=? (string (nth 7 (string->list gregorian-date))) "-")
+         (char-numeric? (nth 8 (string->list gregorian-date)))
+         (char-numeric? (nth 9 (string->list gregorian-date)))
+         (<= (string->number (list->string (list (nth 5 (string->list gregorian-date)) (nth 6 (string->list gregorian-date))))) 12)
+         (> (string->number (list->string (list (nth 5 (string->list gregorian-date)) (nth 6 (string->list gregorian-date))))) 0)
+         (<= (string->number (list->string (list (nth 8 (string->list gregorian-date)) (nth 9 (string->list gregorian-date))))) 31)
+         (> (string->number (list->string (list (nth 8 (string->list gregorian-date)) (nth 9 (string->list gregorian-date))))) 0)
+      )
+    )
+
+  (if is-valid
+    gregorian-date
+    #f))
+
+(define (valid-arvelie arvelie-date)
+  (define is-valid
+    (and (= (string-length arvelie-date) 5)
+         (char-numeric? (nth 0 (string->list arvelie-date)))
+         (char-numeric? (nth 1 (string->list arvelie-date)))
+         (char-numeric? (nth 3 (string->list arvelie-date)))
+         (char-numeric? (nth 4 (string->list arvelie-date)))
+         (<= (string->number (list->string (list (nth 3 (string->list arvelie-date)) (nth 4 (string->list arvelie-date))))) 14)
+         (> (string->number (list->string (list (nth 3 (string->list arvelie-date)) (nth 4 (string->list arvelie-date))))) 0)
+      )
+    )
+
+  (if is-valid
+    arvelie-date
+    #f))
+
+(define (valid-date date)
+  (if (or (valid-gregorian date) (valid-arvelie date))
+    date
+    (error "invalid input"))
+
+)
+
+(define (convert-arvelie date)
+  (if (valid-date date)
+    (if (valid-gregorian date)
+      (gregorian-to-arvelie date)
+      (arvelie-to-gregorian date))))

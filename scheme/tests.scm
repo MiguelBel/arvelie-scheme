@@ -32,4 +32,9 @@
 (runner gregorian-to-arvelie "2020-12-30" "20+01") ; last day + leap year
 (runner gregorian-to-arvelie "2020-12-31" "20+02") ; last day + leap year
 
-;(runner valid-gregorian "2020-12-31" #t)
+(runner valid-date "2020-12-31" "2020-12-31")
+(runner valid-date "99A14" "99A14")
+(runner valid-date "99+01" "99+01")
+
+(runner convert-arvelie "04A02" "2004-01-02")
+(runner convert-arvelie "20+02" "2020-12-31")
