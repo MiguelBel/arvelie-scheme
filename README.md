@@ -37,3 +37,4 @@ Image saved on Saturday August 10, 2019 at 7:30:42 PM
 You can run the tests with `mit-scheme --quiet < tests.scm`.
 
 [More information on Arvelie calendar](https://wiki.xxiivv.com/site/arvelie.html)
+[[ES] More information on my blog](http://miguel.im/log/#arvelie-scheme)
